@@ -7,6 +7,25 @@
 公开仓库（[FunnyNoRun/xrun-release](https://github.com/FunnyNoRun/xrun-release)）
 上的发布版为「限时版」，**自构建起 14 天有效**，过期后请到该仓库下载最新版本。
 
+## [v0.2.0] - 2026-10-14
+
+### 新增
+
+- **多账号**：同一个本地库里保存多个乐跑账号，随时切换。
+  - `xrun account list` 列出全部账号（标记当前）；`xrun account current` 查看当前账号。
+  - `xrun account switch [账号]` 切换当前账号（不带参数时交互选择），
+    引用支持 ID / KEY / uid / 学号 / 展示名。
+  - `xrun account remove [账号]` 删除账号及其区域 / 历史 / 记录缓存（轨迹文件保留）。
+  - `xrun account cache list|clear [账号]` 查看 / 清理各账号的本地缓存。
+  - 全局 `--account <ref>`（或环境变量 `XRUN_ACCOUNT`）可让**单次命令**使用指定账号，
+    不影响当前账号。
+  - `qqlogin` / `wxlogin` 新增 `--label` 给账号起个展示名。
+- **跨账号数据隔离**：账号相关的表（区域、跑步 / 签到历史与留痕、默认轨迹、默认签到点）
+  全部按 `account_id` 隔离；本地轨迹文件全局共享。同一 uid / openid 再次登录会复用原账号
+  （保留其缓存与偏好），新账号才新建并自动切为当前。
+- **旧库自动迁移**：升级后首次运行会把旧的单行 `profile` 档案转成一条账号，
+  旧数据一并归属该账号并设为当前，无需手动处理。
+
 ## v0.1.5 - 2026-10-13
 
 ### 修复

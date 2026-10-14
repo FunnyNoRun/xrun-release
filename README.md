@@ -64,11 +64,33 @@ xrun me                                   # 查看个人信息
 > Ctrl-R 刷新、Esc 退出。终端支持内联图片（Kitty / iTerm2 / Sixel）时会在消息旁显示头像，
 > 不支持则自动降级为纯文字。
 
+## 多账号
+
+一个本地数据库里可以保存多个乐跑账号，随时切换。账号的区域 / 历史 / 记录 / 偏好按账号隔离，
+本地轨迹文件全局共享；登录新账号会自动新增并切为当前，老库首次运行会自动迁移（无需手动处理）。
+
+```bash
+xrun account list                        # 列出全部账号（标记当前）
+xrun account current                     # 查看当前账号
+xrun account switch                      # 交互选择要切换的账号
+xrun account switch 2024001              # 按 ID / KEY / uid / 学号 / 名称切换
+xrun account remove 2024001              # 删除账号及其缓存（轨迹文件保留）
+xrun account cache list                  # 查看各账号的本地缓存条数
+xrun account cache clear 2024001         # 清理某账号的缓存（保留账号与凭据）
+
+xrun --account 2024002 run               # 仅本次命令使用指定账号（不改当前账号）
+xrun qqlogin --label 小号                  # 登录时给账号起个展示名
+```
+
+> [!tip]
+> 环境变量 `XRUN_ACCOUNT` 与 `--account` 等价；`--account` 优先级更高。
+
 ## 常用命令
 
 | 命令 | 说明 |
 | --- | --- |
 | `xrun qqlogin` / `xrun wxlogin` | QQ / 微信扫码登录并绑定乐跑账号 |
+| `xrun account` | 多账号：`list` 列表、`switch` 切换、`remove` 删除、`current` 当前、`cache` 缓存管理 |
 | `xrun status` | 查看登录状态、用户信息与 access_token 健康度 |
 | `xrun run` | 跑步（可选区域与历史轨迹，自动生成合法参数） |
 | `xrun sign` | 签到（可选签到点，支持固定默认点） |
