@@ -7,6 +7,19 @@
 公开仓库（[FunnyNoRun/xrun-release](https://github.com/FunnyNoRun/xrun-release)）
 上的发布版为「限时版」，**自构建起 14 天有效**，过期后请到该仓库下载最新版本。
 
+## v0.2.1 - 2026-10-23
+
+### 变更
+
+- `wxlogin`：微信扫码登录改走**微信开放平台官方扫码接口**（`connect/sdk/qrconnect`
+  出码 + `long.open.weixin.qq.com/connect/l/qrconnect` 长轮询），不再依赖私有协议子模块。
+  - 终端二维码下面会额外打印直链 `https://open.weixin.qq.com/connect/qrcode/<uuid>`，
+    图片可直接在浏览器打开，方便换设备扫码。
+  - 应用级 `access_token` / `sdk_ticket` 落盘缓存到 `<数据目录>/wechat_qr_cache.json`
+    （2 小时有效、提前 120 秒刷新），避免每次登录都刷新微信全局 token。
+  - 仓库移除 `wechatdll` 依赖与 `sdk/weauth-protocol` 子模块，构建与 CI 不再需要
+    `SUBMODULE_TOKEN`，克隆下来即可 `go build ./...`。
+
 ## [v0.2.0] - 2026-10-14
 
 ### 新增
