@@ -7,6 +7,12 @@
 公开仓库（[FunnyNoRun/xrun-release](https://github.com/FunnyNoRun/xrun-release)）
 上的发布版为「限时版」，**自构建起 14 天有效**，过期后请到该仓库下载最新版本。
 
+## [v0.3.2] - 2026-11-13
+
+### 修复 
+
+- 协议版本不匹配导致qqlogin 读取不到openid 登陆失败的bug
+
 ## [v0.3.1] - 2026-11-08
 
 ### 修复
