@@ -7,6 +7,29 @@
 公开仓库（[FunnyNoRun/xrun-release](https://github.com/FunnyNoRun/xrun-release)）
 上的发布版为「限时版」，**自构建起 14 天有效**，过期后请到该仓库下载最新版本。
 
+## [v0.4.0] - 2026-11-19
+
+### 修复
+
+- **适配乐跑 Android 4.3.3（version=233）**：快捷登录、跑步提交等新校验接口
+  的动态字段改为 `AES(UMID + md5(timestamp))`，key/iv 按 `timestamp % 15`
+  轮换；`quickLoginV339` 的 `openid` / `accesstoken` 先按 `nonce % 10`
+  加密再参与签名。旧版直接提交明文凭据或 `md5(ts*2)` 会被服务端拒绝
+  （表现为「登录 openid 为空」或「上传数据失败」）。
+- **`record_str` 按 4.3.3 计算**：`school_id` 与 `uid` 先做**数值相加**再转
+  字符串，而不是直接字符串拼接。
+- **响应解密改为按 `is_encrypt` 判断**：仅当 `is_encrypt=1` 时解密 `data`，
+  避免把明文响应当成密文。
+- **请求密文使用 Android Base64.DEFAULT**：每 76 字符换行并带末尾 LF，
+  与官方 App 的字节格式保持一致。
+
+### 新增
+
+- 每个账号固化 32 位十六进制 UMID（随设备指纹落库，老库自动补生成），
+  `profile reset-device` 会同时重置 UMID。
+- `stopRunV278` 补齐 4.3.3 字段：`is_timeout_zfb`、`run_face_verify_id`、
+  `start_time_face`；提交时间以 `getTimestampV278` 返回的服务端时间为基准。
+
 ## [v0.3.2] - 2026-11-13
 
 ### 修复 
